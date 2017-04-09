@@ -8,6 +8,8 @@
 \usepackage{graphicx}
 \usepackage{fancyhdr}
 \usepackage{moreverb}
+\usepackage{listings}
+\usepackage{courier}
 
 \newcommand{\setR}{\mathbb{R}}
 \newcommand{\setZ}{\mathbb{Z}}
@@ -17,17 +19,102 @@
 \newcommand{\Lra}{\Leftrightarrow}
 \newcommand{\ra}{\rightarrow}
 \newcommand{\Ra}{\Rightarrow}
-\newcommand{\ac}{\textasciicircum}
 \newcommand{\uuline}[1]{\underline{\underline{#1}}}
+\newcommand{\tbf}[1]{\textbf{#1}}
+\newcommand{\tit}[1]{\textit{#1}}
+\newcommand{\tsc}[1]{\textsc{#1}}
+\newcommand{\tsf}[1]{\textsf{#1}}
+\newcommand{\tsl}[1]{\textsl{#1}}
+\newcommand{\ttt}[1]{\texttt{#1}}
+
+\lstset{	numbers=left,
+		numberstyle=\footnotesize\ttfamily,
+		numbersep=8pt,
+		frame = single,
+		basicstyle=\ttfamily,
+		keywordstyle=\bfseries,
+		showstringspaces=false,
+		morekeywords={include, printf, int, if, sizeof, void}}
 
 \renewcommand{\headrulewidth}{0pt}
-\title{Din titel}
-\author{Dit navn her}
+
+\title{Assisting Fuzzing with Symbolic Execution}
+\author{Søren Lund Jensen}
 \begin{document}
 
 \maketitle
 
 \tableofcontents
 
+\newpage
+
+\section{Introduction}
+An ever-present danger in today's society is memory corruption vulnerabilities in software. An attacker could, did he know of these vulnerabilities, exploit them in order to access confidential informations, and as computer processing, and connecting continues to be on the rise, playing a major role in present day, patching these vulnerabilities has to be a priority. This, of course, cannot be done without first discovering the bugs. A variety of tools exists, with the purpose of doing so, but as the bugs are often very specific, and/or wide-spread, creating a silver bullet is hard, if not impossible.
+
+\section{Concept}
+
+\subsection{Fuzzing}
+Stemming from the early years of punch-card-programming, a technique, known as fuzzing exists. This technique works by feeding random input to a program, at a very high rate, some of which will hit specific vulnerabilities in said program. Upon vulnerability-hit, a Fuzzer logs the vulnerability, along with information about where the vulnerability occurred, and which input triggered it.
+
+An advantage, as well as a drawback of most fuzzers is their execution method. They are as little invasive as possible, as to prioritize speed. This means that a typical fuzzer does not analyse a fuzzed application - instead directly executing the application with random input, which is immensely faster than finding qualified input variables, based on an application analysis.
+\subsubsection*{Features of Fuzzing}
+Modern fuzzers implement a variety of features, to enhance their efficiency. In this section, I will list some of the key features, offered by fuzzing.\\
+\tbf{Genetic Fuzzing}\\
+When stating that the AFL fuzzing engine relies on executing applications with inputs at absolute random, one is not totally correct. This is due to the technique known as 'Genetic Fuzzing'. Genetic fuzzing means that the engine generates - \tit{unique} - inputs at total random. Simplified, this means that the current input, that AFL is generating cannot be the same as a previously generated input.  
+\tbf{Stable Transition Tracking}\\
+\tbf{Loop Bucketization}\\
+\tbf{Derandomization}
+\subsubsection*{Limitations of Fuzzing}
+\subsubsection*{Examples}
+
+\subsection{Symbolic Execution}
+\subsubsection*{Features of Symbolic Execution}
+\subsubsection*{Limitations of Symbolic Execution}
+\subsubsection*{Examples}
+
+\subsection{Symbolic Execution-Assisted Fuzzing}
+\subsubsection*{Expected Strengths}
+\subsubsection*{Expected Weaknesses}
+
+\section{Implementation}
+\subsection{The basic algorithm}
+\subsection{American Fuzzy Lop}
+\subsection{Other Implementation traits}
+%TODO XXXXX Write when implementation has been "completed"
+
+\section{Testing}
+\subsection{Basis}
+%Which test-cases have been used, and why?
+\subsection{Results}
+\subsubsection*{Comparable to "Dumb Fuzzing"}
+\subsubsection*{Comparable to Symbolic Execution}
+
+% pyexz3
+% sypy
+% google python symbolic execution
+
+% at lave sin egen symbolicexe er et stort arbejde
+
+% hvilken symbex har jeg balgt - hvorfor
+
+% hvis jeg bruge en eksisterende, skal jeg binde dem sammen
+
+% Midtvejsrapport BEHØVER ikke at være præcis til påske
+
+% afl linker til testcases på deres hjemmeside
+
+\section{Listings}
+\begin{comment}
+\begin{lstlisting}[caption=A program that is difficult to fuzz, label=diffToFuzz, captionpos=b]
+int main(void)
+{
+    int x;
+    read(0, &x, sizeof(x));
+    
+    if (x == 0x012345678)
+        vulnerability();
+}
+\end{lstlisting}
+\end{comment}
 
 \end{document}
