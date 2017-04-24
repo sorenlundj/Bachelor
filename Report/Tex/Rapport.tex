@@ -10,6 +10,7 @@
 \usepackage{moreverb}
 \usepackage{listings}
 \usepackage{courier}
+\usepackage{qtree}
 
 \newcommand{\setR}{\mathbb{R}}
 \newcommand{\setZ}{\mathbb{Z}}
@@ -26,6 +27,8 @@
 \newcommand{\tsf}[1]{\textsf{#1}}
 \newcommand{\tsl}[1]{\textsl{#1}}
 \newcommand{\ttt}[1]{\texttt{#1}}
+\newcommand{\makeline}[1]{\noindent\makebox[\linewidth]{\rule{#1}{0.5pt}}}
+
 
 \lstset{	numbers=left,
 		numberstyle=\footnotesize\ttfamily,
@@ -48,27 +51,78 @@
 
 \newpage
 
-\section{Introduction}
-An ever-present danger in today's society is memory corruption vulnerabilities in software. An attacker could, did he know of these vulnerabilities, exploit them in order to access confidential informations, and as computer processing, and connecting continues to be on the rise, playing a major role in present day, patching these vulnerabilities has to be a priority. This, of course, cannot be done without first discovering the bugs. A variety of tools exists, with the purpose of doing so, but as the bugs are often very specific, and/or wide-spread, creating a silver bullet is hard, if not impossible.
+\section{Introduction and concept}
+An ever-present danger in today's society is memory corruption vulnerabilities in software, be they using of uninitialized memory, using dangling null-pointers, buffer overflow, memory leaks, or a fifth, sixth, or seventh vulnerabilities. An attacker could, did he know of these vulnerabilities, exploit them in order to access confidential informations, and as computer processing- and connecting continues to be on the rise, playing a major role in present day, patching these vulnerabilities has to be a priority. This, of course, cannot be done without first discovering the bugs. 
 
-\section{Concept}
+Memory corruption bugs are often-case virtually untraceable, as only specific input combinations may trigger them, or the fact that they may appear under very unusual conditions, which makes it very hard to discover, or in some cases, even reproduce them. Add thereto, the fact, that the memory corruption's effect may manifest itself far away from it's source, it can also be hard to even correlate these two, once a bug has been discovered.
 
-\subsection{Fuzzing}
-Stemming from the early years of punch-card-programming, a technique, known as fuzzing exists. This technique works by feeding random input to a program, at a very high rate, some of which will hit specific vulnerabilities in said program. Upon vulnerability-hit, a Fuzzer logs the vulnerability, along with information about where the vulnerability occurred, and which input triggered it.
+A variety of tools exists, with the purpose of bug-discovery, but as the bugs are often very specific, and/or wide-spread, creating a silver bullet is hard, if not impossible. Many vulnerabilities are discovered manually, however, this solution is not scalable, as software applications generally increase in size and complexity. A handful of tools exist, including fuzzers and symbolic execution engines. These do, however have, in the worst cases, deal-breaking flaws, working against them, and their usefulness.
+
+In the following paper, I will combine the AFL fuzzer with a symbolic execution engine, in order to both make use of both of their strengths, as well as mitigate their, not insignificant, weaknesses.
+
+\subsection{Problem statement}
+How can American Fuzzy Lop be used, along with symbolic execution, in order to verify known security vulnerabilities in software?\\
+Does this experiment display a significant difference, in terms of running time and bugs/vulnerabilities found, when compared to "regular" fuzzing?
+%TODO Evt: hvordan relaterer dette til test-case-generation fra andre testmetoder (f.eks property-based testing)?
+\newpage
+\subsection{Understanding Fuzzing}
+Stemming from the early years of punch-card-programming, a technique, known as fuzzing exists. This technique works by feeding random input to a program, at a very high rate, some of which will hit specific vulnerabilities in said program. Upon vulnerability-hit, a fuzzer logs the vulnerability, along with information about where the vulnerability occurred, and which input triggered it.
 
 An advantage, as well as a drawback of most fuzzers is their execution method. They are as little invasive as possible, as to prioritize speed. This means that a typical fuzzer does not analyse a fuzzed application - instead directly executing the application with random input, which is immensely faster than finding qualified input variables, based on an application analysis.
 \subsubsection*{Features of Fuzzing}
+
 Modern fuzzers implement a variety of features, to enhance their efficiency. In this section, I will list some of the key features, offered by fuzzing.\\
 \tbf{Genetic Fuzzing}\\
 When stating that the AFL fuzzing engine relies on executing applications with inputs at absolute random, one is not totally correct. This is due to the technique known as 'Genetic Fuzzing'. Genetic fuzzing means that the engine generates - \tit{unique} - inputs at total random. Simplified, this means that the current input, that AFL is generating cannot be the same as a previously generated input.  
 \tbf{Stable Transition Tracking}\\
+AFL views the union of source and destination as a tuple of it's destination blocks.  These tuples are prioritised, meaning that tuples cause the most different execution are chosen first for future input generation.
 \tbf{Loop Bucketization}\\
-\tbf{Derandomization}
+For a symbolic execution engines and fuzzers alike, loops are complicated to handle, as looping potentially offers an added layer of complexity. The AFL fuzzer makes the following contortions, in order to avoid looping's added complexity, and path space requirements:
+When AFL detects that a triggered path contains a loop, it logs the executed loop iterations and compares this with previous inputs. The paths are grouped, based on the amount of iterations, and hereafter only \tit{one} path in a group is fuzzed XXXXX upon. Using this technique, $O(N)$ of the slow loop-including paths are executed, as opposed to $O(N)$ paths.\\
+\tbf{Derandomization}\\
+ TODO
+%TODO
+\newpage
 \subsubsection*{Limitations of Fuzzing}
-\subsubsection*{Examples}
-
-\subsection{Symbolic Execution}
+Because of the union of the above techniques and it's general nature, AFL is able to quickly discover a wide selection of general vulnerabilities, meaning vulnerabilities, that are triggered by some \tit{kind} of input. When vulnerability-triggers move past general input, and into the territory of general input AFL can potentially fall seriously behind.
+\begin{lstlisting}[caption=A program that is difficult to fuzz, label=diffToFuzz, captionpos=b]
+int main(void)
+{
+    int x;
+    read(0, &x, sizeof(x));
+    
+    if (x == 0x12345678){
+        vulnerability();
+    }
+    else{
+         ...
+    }
+}
+\end{lstlisting}
+A generic example of this can be seen in Listing \ref{diffToFuzz}. This describes a program, that takes an input $x$ from a user. If, and only if, $x$ evaluates to $0x12345678$ the program will fail, as a vulnerability has been triggered, and as so, at each command, executed by the fuzzer, the frequency, and by extension, the chance of discovering the bug, is $1$ in $2^{32}$. Furthermore, as the AFL lacks the ability to produce new paths within this specific program lacks, it's instrumentation falls short, and AFL is reduced to randomly mutating non-instrumented input.
+\subsection{Understanding Symbolic Execution}
+Symbolic execution, or symbolic evaluation, is a way of analysing programs, in order to determine the different ways said program can be executed, and which type of input causes it. Instead of executing actual values, to determine this, an interpreter assigns symbolic values to the input variables. 
 \subsubsection*{Features of Symbolic Execution}
+\begin{lstlisting}[caption=Example of Symbolic Execution, label=SymExExample, captionpos=b]
+int main(void)
+{
+    int x;
+    read(0, &x, sizeof(x));
+    
+    if (x > 0x0010){
+        ...
+    }
+    else{
+        ...
+    }
+    if (x > 0x0100){
+        ...
+    }
+    else{
+        ...
+    }
+}
+\end{lstlisting}
 \subsubsection*{Limitations of Symbolic Execution}
 \subsubsection*{Examples}
 
@@ -103,18 +157,11 @@ When stating that the AFL fuzzing engine relies on executing applications with i
 
 % afl linker til testcases på deres hjemmeside
 
-\section{Listings}
 \begin{comment}
-\begin{lstlisting}[caption=A program that is difficult to fuzz, label=diffToFuzz, captionpos=b]
-int main(void)
-{
-    int x;
-    read(0, &x, sizeof(x));
-    
-    if (x == 0x012345678)
-        vulnerability();
-}
-\end{lstlisting}
+
+Listinglabels
+diffToFuzz
+SymExExample
 \end{comment}
 
 \end{document}
