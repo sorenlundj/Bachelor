@@ -11,6 +11,9 @@
 \usepackage{listings}
 \usepackage{courier}
 \usepackage{qtree}
+\usepackage[normalem]{ulem}
+\usepackage{color}
+\usepackage{comment}
 
 \newcommand{\setR}{\mathbb{R}}
 \newcommand{\setZ}{\mathbb{Z}}
@@ -20,7 +23,6 @@
 \newcommand{\Lra}{\Leftrightarrow}
 \newcommand{\ra}{\rightarrow}
 \newcommand{\Ra}{\Rightarrow}
-\newcommand{\uuline}[1]{\underline{\underline{#1}}}
 \newcommand{\tbf}[1]{\textbf{#1}}
 \newcommand{\tit}[1]{\textit{#1}}
 \newcommand{\tsc}[1]{\textsc{#1}}
@@ -36,8 +38,10 @@
 		frame = single,
 		basicstyle=\ttfamily,
 		keywordstyle=\bfseries,
+		commentstyle=\color{green},
 		showstringspaces=false,
-		morekeywords={include, printf, int, if, sizeof, void}}
+		morekeywords={include, printf, int, if, else, sizeof, void}
+		}
 
 \renewcommand{\headrulewidth}{0pt}
 
@@ -93,39 +97,60 @@ int main(void)
     
     if (x == 0x12345678){
         vulnerability();
-    }
-    else{
+    }else{
          ...
     }
 }
 \end{lstlisting}
 A generic example of this can be seen in Listing \ref{diffToFuzz}. This describes a program, that takes an input $x$ from a user. If, and only if, $x$ evaluates to $0x12345678$ the program will fail, as a vulnerability has been triggered, and as so, at each command, executed by the fuzzer, the frequency, and by extension, the chance of discovering the bug, is $1$ in $2^{32}$. Furthermore, as the AFL lacks the ability to produce new paths within this specific program lacks, it's instrumentation falls short, and AFL is reduced to randomly mutating non-instrumented input.
 \subsection{Understanding Symbolic Execution}
-Symbolic execution, or symbolic evaluation, is a way of analysing programs, in order to determine the different ways said program can be executed, and which type of input causes it. Instead of executing actual values, to determine this, an interpreter assigns symbolic values to the input variables. 
+Symbolic execution, or symbolic evaluation, is a way of analysing programs, in order to determine the different ways said program can be executed, and which type of input causes it. Instead of executing actual values, to determine this, an interpreter assigns symbolic values to the input variables. The symbolic used to visualise how the program will execute, based on what \tit{kind} of input it will be fed.
 \subsubsection*{Features of Symbolic Execution}
+As symbolic execution relies on analysing input, instead of mindlessly executing input, it is able to detect specific inputs which, in this case, cause the application to crash. See Listing \ref{diffToFuzz} as an example. A symbolic execution engine will analyse it's functions, and generate the following tree:\\
+\centerline{\Tree [.$\emptyset$ [. $x==0x12345678$ $\neg(x==0x12345678)$ ] ]}
+\newpage
+\noindent Another advantage of symbolic execution is the ability to invalidate sections input.
 \begin{lstlisting}[caption=Example of Symbolic Execution, label=SymExExample, captionpos=b]
 int main(void)
 {
-    int x;
-    read(0, &x, sizeof(x));
+    int y;
+    read(0, &y, sizeof(y));
     
-    if (x > 0x0010){
+    if (y > 0x01){
+        ...
+    }else{
         ...
     }
-    else{
+    if (y > 0x10){
         ...
-    }
-    if (x > 0x0100){
-        ...
-    }
-    else{
+    }else{
         ...
     }
 }
 \end{lstlisting}
+In Listing \ref{SymExExample} above, for example, the input $y$ is evaluated. A symbolic execution engine will analyse Listing \ref{SymExExample}'s formulae, to find that $y$ will either assume a value greater than $0x01$ or not greater than $0x01$. Furthermore $y$ will either assume a value greater, or not greater than $0x10$, however greater than $0x10$ cannot occur, if $y$, at the same time was not greater than $0x01$. This will produce the following tree:\\
+\centerline{
+\Tree [.$\emptyset$
+		[.$y>0x01$ 
+			[. $y>10$ 
+			   $\neg(y>0x10)$
+			]
+		]
+		[.$\neg(y>0x01)$
+			[. \xout{$y>0x10$} 
+			   $\neg(y>0x10)$ 
+			]
+		]
+	]
+}
+Because of this trait, symbolic execution's relevance to the experiment is further heightened, as this allows for AFL to exclude certain value-ranges, when mutating input.
 \subsubsection*{Limitations of Symbolic Execution}
-\subsubsection*{Examples}
-
+\tbf{Program-Dependent Efficiency}\\
+The advantage of having a symbolic execution-engine analyse paths, as opposed to input, is not present in all programs. If some inputs take the same paths in a program, the difference in analysing the inputs instead of paths, is vanishingly small.\\
+\tbf{Environment Interactions}\\
+Often programs interact with their environment, such as executing system calls and/or receiving signals. This becomes a problem when these environment factors are not under the control of the symbolic execution tool, as the tool is not able to determine branching of a program, when it has insufficient data concerning input.\\
+\tbf{Path Explosion}\\
+The last, and possibly biggest drawback in symbolic execution engines is the path explosion problem. This problem is caused by a program that is containing loops, which causes the amount of path to grow exponentially. In theory the path amount can even become infinite, because of unbound loops. This problem is near-not-existing in small programs, however it often scales faster than the symbolically executed program scales, rendering symbolic execution virtually useless for testing medium to large applications.
 \subsection{Symbolic Execution-Assisted Fuzzing}
 \subsubsection*{Expected Strengths}
 \subsubsection*{Expected Weaknesses}
