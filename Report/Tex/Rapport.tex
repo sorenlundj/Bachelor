@@ -69,7 +69,7 @@ How can American Fuzzy Lop be used, along with symbolic execution, in order to v
 Does this experiment display a significant difference, in terms of running time and bugs/vulnerabilities found, when compared to "regular" fuzzing?
 %TODO Evt: hvordan relaterer dette til test-case-generation fra andre testmetoder (f.eks property-based testing)?
 \newpage
-\subsection{Understanding Fuzzing}
+\subsection{Fuzzing}
 Stemming from the early years of punch-card-programming, a technique, known as fuzzing exists. This technique works by feeding random input to a program, at a very high rate, some of which will hit specific vulnerabilities in said program. Upon vulnerability-hit, a fuzzer logs the vulnerability, along with information about where the vulnerability occurred, and which input triggered it.
 
 An advantage, as well as a drawback of most fuzzers is their execution method. They are as little invasive as possible, as to prioritize speed. This means that a typical fuzzer does not analyse a fuzzed application - instead directly executing the application with random input, which is immensely faster than finding qualified input variables, based on an application analysis.
@@ -103,7 +103,7 @@ int main(void)
 }
 \end{lstlisting}
 A generic example of this can be seen in Listing \ref{diffToFuzz}. This describes a program, that takes an input $x$ from a user. If, and only if, $x$ evaluates to $0x12345678$ the program will fail, as a vulnerability has been triggered, and as so, at each command, executed by the fuzzer, the frequency, and by extension, the chance of discovering the bug, is $1$ in $2^{32}$. Furthermore, as the AFL lacks the ability to produce new paths within this specific program lacks, it's instrumentation falls short, and AFL is reduced to randomly mutating non-instrumented input.
-\subsection{Understanding Symbolic Execution}
+\subsection{Symbolic Execution}
 Symbolic execution, or symbolic evaluation, is a way of analysing programs, in order to determine the different ways said program can be executed, and which type of input causes it. Instead of executing actual values, to determine this, an interpreter assigns symbolic values to the input variables. The symbolic used to visualise how the program will execute, based on what \tit{kind} of input it will be fed.
 \subsubsection*{Features of Symbolic Execution}
 As symbolic execution relies on analysing input, instead of mindlessly executing input, it is able to detect specific inputs which, in this case, cause the application to crash. See Listing \ref{diffToFuzz} as an example. A symbolic execution engine will analyse it's functions, and generate the following tree:\\
@@ -156,6 +156,7 @@ The last, and possibly biggest drawback in symbolic execution engines is the pat
 \subsubsection*{Expected Weaknesses}
 
 \section{Implementation}
+\subsection{Python}
 \subsection{The basic algorithm}
 \subsection{American Fuzzy Lop}
 \subsection{Other Implementation traits}
@@ -172,13 +173,7 @@ The last, and possibly biggest drawback in symbolic execution engines is the pat
 % sypy
 % google python symbolic execution
 
-% at lave sin egen symbolicexe er et stort arbejde
-
 % hvilken symbex har jeg balgt - hvorfor
-
-% hvis jeg bruge en eksisterende, skal jeg binde dem sammen
-
-% Midtvejsrapport BEHØVER ikke at være præcis til påske
 
 % afl linker til testcases på deres hjemmeside
 
@@ -189,4 +184,7 @@ diffToFuzz
 SymExExample
 \end{comment}
 
+\section{Conclusion}
+\subsection{Discussion}
+\subsection{Future Work}
 \end{document}
