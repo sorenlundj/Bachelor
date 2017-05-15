@@ -49,16 +49,18 @@
 \author{Søren Lund Jensen}
 \begin{document}
 
-\maketitle
+\maketitle %TODO ændr til en flottere forside
 
 \tableofcontents
 
 \newpage
+\section{Abstract}
 
+\newpage
 \section{Introduction and concept}
-An ever-present danger in today's society is memory corruption vulnerabilities in software, be they using of uninitialized memory, using dangling null-pointers, buffer overflow, memory leaks, or a fifth, sixth, or seventh vulnerabilities. An attacker could, did he know of these vulnerabilities, exploit them in order to access confidential informations, and as computer processing- and connecting continues to be on the rise, playing a major role in present day, patching these vulnerabilities has to be a priority. This, of course, cannot be done without first discovering the bugs. 
+An ever-present danger in today's society is memory corruption vulnerabilities in software, be they use of uninitialized memory, using dangling null-pointers, buffer overflow, memory leaks, or a fifth, sixth- or seventh vulnerabilities. An attacker could, did he know of these vulnerabilities, exploit them in order to access confidential informations, create DOS-attacks or other and as computer processing and connecting continues to be on the rise, playing a major role in present day, patching these vulnerabilities has to be a priority. This, of course, cannot be done without first discovering said bugs. 
 
-Memory corruption bugs are often-case virtually untraceable, as only specific input combinations may trigger them, or the fact that they may appear under very unusual conditions, which makes it very hard to discover, or in some cases, even reproduce them. Add thereto, the fact, that the memory corruption's effect may manifest itself far away from it's source, it can also be hard to even correlate these two, once a bug has been discovered.
+Memory corruption bugs are often-case virtually untraceable, as only specific input combinations may trigger them, or the fact that they may appear under very unusual conditions, which makes it very hard to discover, or in some cases, even reproduce them. Add thereto, the fact, that the memory corruption's effect may manifest itself far away from its source, it can also be hard to even correlate these two, once a bug has been discovered.
 
 A variety of tools exists, with the purpose of bug-discovery, but as the bugs are often very specific, and/or wide-spread, creating a silver bullet is hard, if not impossible. Many vulnerabilities are discovered manually, however, this solution is not scalable, as software applications generally increase in size and complexity. A handful of tools exist, including fuzzers and symbolic execution engines. These do, however have, in the worst cases, deal-breaking flaws, working against them, and their usefulness.
 
@@ -69,11 +71,11 @@ How can American Fuzzy Lop be used, along with symbolic execution, in order to v
 Does this experiment display a significant difference, in terms of running time and bugs/vulnerabilities found, when compared to "regular" fuzzing?
 %TODO Evt: hvordan relaterer dette til test-case-generation fra andre testmetoder (f.eks property-based testing)?
 \newpage
-\subsection{Fuzzing}
+\section{Fuzzing}
 Stemming from the early years of punch-card-programming, a technique, known as fuzzing exists. This technique works by feeding random input to a program, at a very high rate, some of which will hit specific vulnerabilities in said program. Upon vulnerability-hit, a fuzzer logs the vulnerability, along with information about where the vulnerability occurred, and which input triggered it.
 
 An advantage, as well as a drawback of most fuzzers is their execution method. They are as little invasive as possible, as to prioritize speed. This means that a typical fuzzer does not analyse a fuzzed application - instead directly executing the application with random input, which is immensely faster than finding qualified input variables, based on an application analysis.
-\subsubsection*{Features of Fuzzing}
+\subsection{Features of Fuzzing}
 
 Modern fuzzers implement a variety of features, to enhance their efficiency. In this section, I will list some of the key features, offered by fuzzing.\\
 \tbf{Genetic Fuzzing}\\
@@ -87,7 +89,7 @@ When AFL detects that a triggered path contains a loop, it logs the executed loo
  TODO
 %TODO
 \newpage
-\subsubsection*{Limitations of Fuzzing}
+\subsection{Limitations of Fuzzing}
 Because of the union of the above techniques and it's general nature, AFL is able to quickly discover a wide selection of general vulnerabilities, meaning vulnerabilities, that are triggered by some \tit{kind} of input. When vulnerability-triggers move past general input, and into the territory of general input AFL can potentially fall seriously behind.
 \begin{lstlisting}[caption=A program that is difficult to fuzz, label=diffToFuzz, captionpos=b]
 int main(void)
@@ -103,9 +105,9 @@ int main(void)
 }
 \end{lstlisting}
 A generic example of this can be seen in Listing \ref{diffToFuzz}. This describes a program, that takes an input $x$ from a user. If, and only if, $x$ evaluates to $0x12345678$ the program will fail, as a vulnerability has been triggered, and as so, at each command, executed by the fuzzer, the frequency, and by extension, the chance of discovering the bug, is $1$ in $2^{32}$. Furthermore, as the AFL lacks the ability to produce new paths within this specific program lacks, it's instrumentation falls short, and AFL is reduced to randomly mutating non-instrumented input.
-\subsection{Symbolic Execution}
+\section{Symbolic Execution}
 Symbolic execution, or symbolic evaluation, is a way of analysing programs, in order to determine the different ways said program can be executed, and which type of input causes it. Instead of executing actual values, to determine this, an interpreter assigns symbolic values to the input variables. The symbolic used to visualise how the program will execute, based on what \tit{kind} of input it will be fed.
-\subsubsection*{Features of Symbolic Execution}
+\subsection{Features of Symbolic Execution}
 As symbolic execution relies on analysing input, instead of mindlessly executing input, it is able to detect specific inputs which, in this case, cause the application to crash. See Listing \ref{diffToFuzz} as an example. A symbolic execution engine will analyse it's functions, and generate the following tree:\\
 \centerline{\Tree [.$\emptyset$ [. $x==0x12345678$ $\neg(x==0x12345678)$ ] ]}
 \newpage
@@ -144,16 +146,16 @@ In Listing \ref{SymExExample} above, for example, the input $y$ is evaluated. A 
 	]
 }
 Because of this trait, symbolic execution's relevance to the experiment is further heightened, as this allows for AFL to exclude certain value-ranges, when mutating input.
-\subsubsection*{Limitations of Symbolic Execution}
+\subsection{Limitations of Symbolic Execution}
 \tbf{Program-Dependent Efficiency}\\
 The advantage of having a symbolic execution-engine analyse paths, as opposed to input, is not present in all programs. If some inputs take the same paths in a program, the difference in analysing the inputs instead of paths, is vanishingly small.\\
 \tbf{Environment Interactions}\\
 Often programs interact with their environment, such as executing system calls and/or receiving signals. This becomes a problem when these environment factors are not under the control of the symbolic execution tool, as the tool is not able to determine branching of a program, when it has insufficient data concerning input.\\
 \tbf{Path Explosion}\\
 The last, and possibly biggest drawback in symbolic execution engines is the path explosion problem. This problem is caused by a program that is containing loops, which causes the amount of path to grow exponentially. In theory the path amount can even become infinite, because of unbound loops. This problem is near-not-existing in small programs, however it often scales faster than the symbolically executed program scales, rendering symbolic execution virtually useless for testing medium to large applications.
-\subsection{Symbolic Execution-Assisted Fuzzing}
-\subsubsection*{Expected Strengths}
-\subsubsection*{Expected Weaknesses}
+\section{Symbolic Execution-Assisted Fuzzing}
+\subsection{Expected Strengths}
+\subsection{Expected Weaknesses}
 
 \section{Implementation}
 \subsection{Python}
