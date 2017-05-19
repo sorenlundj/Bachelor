@@ -7638,7 +7638,7 @@ int main(int argc, char** argv) {
   gettimeofday(&tv, &tz);
   srandom(tv.tv_sec ^ tv.tv_usec ^ getpid());
 
-  while ((opt = getopt(argc, argv, "+i:o:f:m:t:T:dnCB:S:M:x:Q")) > 0)
+  while ((opt = getopt(argc, argv, "+i:o:f:m:t:T:dnCB:S:M:x:Q:A")) > 0)
 
     switch (opt) {
 
@@ -7804,6 +7804,11 @@ int main(int argc, char** argv) {
 
         if (!mem_limit_given) mem_limit = MEM_LIMIT_QEMU;
 
+        break;
+        
+    case 'A':   /* Symbolic execution-mode (ANGR) */
+//        if (sym_exe) FATAL("Multiple -A options not supported");
+//TODO:        sym_exe =
         break;
 
       default:

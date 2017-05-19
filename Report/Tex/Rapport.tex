@@ -72,7 +72,7 @@ Does this experiment display a significant difference, in terms of running time 
 %TODO Evt: hvordan relaterer dette til test-case-generation fra andre testmetoder (f.eks property-based testing)?
 \newpage
 \section{Fuzzing}
-Stemming from the early years of punch-card-programming, a technique, known as fuzzing exists. This technique works by feeding random input to a program, at a very high rate, some of which will hit specific vulnerabilities in said program. Upon vulnerability-hit, a fuzzer logs the vulnerability, along with information about where the vulnerability occurred, and which input triggered it.
+This technique works by feeding random input to a program, at a very high rate, some of which will hit specific vulnerabilities in said program. Every input fed is logged, and upon vulnerability-hit, a fuzzer logs the input-ID. Hereafter information about where the vulnerability occurred, and which input triggered it is gatherable, based on input ID.
 
 An advantage, as well as a drawback of most fuzzers is their execution method. They are as little invasive as possible, as to prioritize speed. This means that a typical fuzzer does not analyse a fuzzed application - instead directly executing the application with random input, which is immensely faster than finding qualified input variables, based on an application analysis.
 \subsection{Features of Fuzzing}
@@ -165,7 +165,7 @@ The last, and possibly biggest drawback in symbolic execution engines is the pat
 %TODO XXXXX Write when implementation has been "completed"
 
 \section{Testing}
-\subsection{Basis}
+\subsection{Test Cases}
 %Which test-cases have been used, and why?
 \subsection{Results}
 \subsubsection*{Comparable to "Dumb Fuzzing"}
