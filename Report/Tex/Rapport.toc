@@ -1,24 +1,20 @@
-\select@language {danish}
+\select@language {english}
 \contentsline {section}{\numberline {1}Abstract}{2}
 \contentsline {section}{\numberline {2}Introduction and concept}{3}
 \contentsline {subsection}{\numberline {2.1}Problem statement}{3}
-\contentsline {section}{\numberline {3}Fuzzing}{4}
-\contentsline {subsection}{\numberline {3.1}Features of Fuzzing}{4}
-\contentsline {subsection}{\numberline {3.2}Limitations of Fuzzing}{5}
+\contentsline {section}{\numberline {3}American Fuzzy Lop}{4}
+\contentsline {subsection}{\numberline {3.1}Features of AFL}{4}
+\contentsline {subsection}{\numberline {3.2}Limitations of AFL}{5}
 \contentsline {section}{\numberline {4}Symbolic Execution}{5}
 \contentsline {subsection}{\numberline {4.1}Features of Symbolic Execution}{5}
 \contentsline {subsection}{\numberline {4.2}Limitations of Symbolic Execution}{6}
-\contentsline {section}{\numberline {5}Symbolic Execution-Assisted Fuzzing}{7}
-\contentsline {subsection}{\numberline {5.1}Expected Strengths}{7}
-\contentsline {subsection}{\numberline {5.2}Expected Weaknesses}{7}
-\contentsline {section}{\numberline {6}Implementation}{7}
-\contentsline {subsection}{\numberline {6.1}Python}{7}
-\contentsline {subsection}{\numberline {6.2}The basic algorithm}{7}
-\contentsline {subsection}{\numberline {6.3}American Fuzzy Lop}{7}
-\contentsline {subsection}{\numberline {6.4}Other Implementation traits}{7}
-\contentsline {section}{\numberline {7}Testing}{7}
-\contentsline {subsection}{\numberline {7.1}Test Cases}{7}
-\contentsline {subsection}{\numberline {7.2}Results}{7}
-\contentsline {section}{\numberline {8}Conclusion}{7}
-\contentsline {subsection}{\numberline {8.1}Discussion}{7}
-\contentsline {subsection}{\numberline {8.2}Future Work}{7}
+\contentsline {section}{\numberline {5}angr: The Concolic Execution Engine}{7}
+\contentsline {section}{\numberline {6}Driller: Concolic Execution-Assisted Fuzzing}{8}
+\contentsline {subsection}{\numberline {6.1}Strengths}{9}
+\contentsline {subsection}{\numberline {6.2}Weaknesses}{9}
+\contentsline {section}{\numberline {7}Testing}{9}
+\contentsline {subsection}{\numberline {7.1}Test Cases}{9}
+\contentsline {subsection}{\numberline {7.2}Results}{9}
+\contentsline {section}{\numberline {8}Conclusion}{9}
+\contentsline {subsection}{\numberline {8.1}Discussion}{9}
+\contentsline {subsection}{\numberline {8.2}Future Work}{9}
