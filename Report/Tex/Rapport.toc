@@ -1,22 +1,53 @@
 \select@language {english}
+\addvspace {1\p@ }
+\addvspace {1\p@ }
 \contentsline {section}{\numberline {1}Abstract}{2}
+\addvspace {1\p@ }
 \contentsline {section}{\numberline {2}Introduction and concept}{3}
+\addvspace {0\p@ }
 \contentsline {subsection}{\numberline {2.1}Problem statement}{3}
-\contentsline {section}{\numberline {3}American Fuzzy Lop}{4}
-\contentsline {subsection}{\numberline {3.1}Features of AFL}{4}
-\contentsline {subsection}{\numberline {3.2}Limitations of AFL}{5}
-\contentsline {section}{\numberline {4}Symbolic Execution}{5}
-\contentsline {subsection}{\numberline {4.1}Features of Symbolic Execution}{5}
-\contentsline {subsection}{\numberline {4.2}Limitations of Symbolic Execution}{6}
-\contentsline {section}{\numberline {5}angr: The Concolic Execution Engine}{7}
-\contentsline {section}{\numberline {6}Driller: Concolic Execution-Assisted Fuzzing}{8}
-\contentsline {subsection}{\numberline {6.1}Input Preconstraining}{8}
-\contentsline {subsection}{\numberline {6.2}Re-randomization}{10}
-\contentsline {subsection}{\numberline {6.3}The Algorithm}{11}
-\contentsline {subsection}{\numberline {6.4}Additional Advantages of Driller}{11}
-\contentsline {section}{\numberline {7}Testing}{12}
-\contentsline {subsection}{\numberline {7.1}Test Cases}{12}
-\contentsline {subsection}{\numberline {7.2}Results}{12}
-\contentsline {section}{\numberline {8}Conclusion}{12}
-\contentsline {subsection}{\numberline {8.1}Discussion}{12}
-\contentsline {subsection}{\numberline {8.2}Future Work}{12}
+\addvspace {1\p@ }
+\contentsline {section}{\numberline {3}Team Shellphish}{4}
+\addvspace {1\p@ }
+\contentsline {section}{\numberline {4}American Fuzzy Lop}{4}
+\addvspace {0\p@ }
+\contentsline {subsection}{\numberline {4.1}Features of AFL}{4}
+\addvspace {0\p@ }
+\contentsline {subsection}{\numberline {4.2}Limitations of AFL}{5}
+\addvspace {1\p@ }
+\contentsline {section}{\numberline {5}Symbolic Execution}{5}
+\addvspace {0\p@ }
+\contentsline {subsection}{\numberline {5.1}Features of Symbolic Execution}{5}
+\addvspace {0\p@ }
+\contentsline {subsection}{\numberline {5.2}Limitations of Symbolic Execution}{6}
+\addvspace {1\p@ }
+\contentsline {section}{\numberline {6}angr: The Concolic Execution Engine}{7}
+\addvspace {0\p@ }
+\contentsline {subsection}{\numberline {6.1}Diversity}{8}
+\addvspace {0\p@ }
+\contentsline {subsection}{\numberline {6.2}The Binary Load Sub-Module}{8}
+\addvspace {1\p@ }
+\contentsline {section}{\numberline {7}Driller: Concolic Execution-Assisted Fuzzing}{8}
+\addvspace {0\p@ }
+\contentsline {subsection}{\numberline {7.1}Input Preconstraining}{9}
+\addvspace {0\p@ }
+\contentsline {subsection}{\numberline {7.2}Re-randomization}{10}
+\addvspace {0\p@ }
+\contentsline {subsection}{\numberline {7.3}The Algorithm}{11}
+\addvspace {0\p@ }
+\contentsline {subsection}{\numberline {7.4}Additional Advantages of Driller}{12}
+\addvspace {1\p@ }
+\contentsline {section}{\numberline {8}Testing}{12}
+\addvspace {0\p@ }
+\contentsline {subsection}{\numberline {8.1}Test Cases}{12}
+\addvspace {0\p@ }
+\contentsline {subsection}{\numberline {8.2}Results}{13}
+\addvspace {1\p@ }
+\contentsline {section}{\numberline {9}Conclusion}{13}
+\addvspace {0\p@ }
+\contentsline {subsection}{\numberline {9.1}Discussion}{13}
+\addvspace {0\p@ }
+\contentsline {subsection}{\numberline {9.2}Future Work}{13}
+\addvspace {1\p@ }
+\contentsline {section}{\numberline {10}Acknowledgements}{13}
+\addvspace {1\p@ }
