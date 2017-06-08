@@ -17,6 +17,7 @@
 \usepackage{float}
 \usepackage{enumitem}
 \usepackage{etoolbox}
+\usepackage{scrextend}
 
 \newcommand{\setR}{\mathbb{R}}
 \newcommand{\setZ}{\mathbb{Z}}
@@ -32,8 +33,9 @@
 \newcommand{\tsf}[1]{\textsf{#1}}
 \newcommand{\tsl}[1]{\textsl{#1}}
 \newcommand{\ttt}[1]{\texttt{#1}}
-\newcommand{\subsubsubsection}[1]{\tbf{#1}\\}
+\newcommand{\subsubsubsection}[1]{\tbf{#1}}
 \newcommand{\makeline}[1]{\noindent\makebox[\linewidth]{\rule{#1}{0.5pt}}}
+\newcommand{\marginwidth}{0.5cm}
 
 \makeatletter
 \pretocmd{\section}{\addtocontents{toc}{\protect\addvspace{1\p@}}}{}{}
@@ -94,14 +96,22 @@ An advantage, as well as a drawback of most fuzzers, hereunder AFL is its execut
 \label{sec:FeaturesAFL}
 AFL implements a variety of features, to enhance its efficiency. In this section, I will list some of the key features, offered.\\
 \subsubsubsection{Genetic Fuzzing}
-When stating that the AFL fuzzing engine relies on executing applications with inputs at absolute random, one is not totally correct. This is due to the technique known as 'Genetic Fuzzing'. Genetic fuzzing means that the engine generates - \tit{unique} - inputs at total random. Simplified, this means that the current input, that AFL is generating cannot be the same as a previously generated input.\\
+\begin{addmargin}[\marginwidth]{0cm}
+When stating that the AFL fuzzing engine relies on executing applications with inputs at absolute random, one is not totally correct. This is due to the technique known as 'Genetic Fuzzing'. Genetic fuzzing means that the engine generates - \tit{unique} - inputs at total random. Simplified, this means that the current input, that AFL is generating cannot be the same as a previously generated input.
+\end{addmargin}
 \subsubsubsection{Stable Transition Tracking}
-AFL views the union of source and destination as a tuple of it's destination blocks. These tuples are prioritised, meaning that the tuples that cause the most different execution, compared to previous executions, are chosen first for future input generation.\\
+\begin{addmargin}[\marginwidth]{0cm}
+AFL views the union of source and destination as a tuple of it's destination blocks. These tuples are prioritised, meaning that the tuples that cause the most different execution, compared to previous executions, are chosen first for future input generation.
+\end{addmargin}
 \subsubsubsection{Loop Bucketization}
+\begin{addmargin}[\marginwidth]{0cm}
 For a symbolic execution engines and fuzzers alike, loops are complicated to handle, as looping potentially offers an added layer of complexity. The AFL fuzzer makes the following contortions, in order to avoid looping's added complexity, and path space requirements:
-When AFL detects that a triggered path contains a loop, it logs the executed loop iterations and compares this with previous inputs. The paths are grouped, based on the amount of iterations, and hereafter only \tit{one} path in a group is selected for further fuzzing. Using this the execution time of executing low loop-including paths is reduced to $O(log(N))$, as opposed to $O(N)$, if every single path should be discovered.\\
+When AFL detects that a triggered path contains a loop, it logs the executed loop iterations and compares this with previous inputs. The paths are grouped, based on the amount of iterations, and hereafter only \tit{one} path in a group is selected for further fuzzing. Using this the execution time of executing low loop-including paths is reduced to $O(log(N))$, as opposed to $O(N)$, if every single path should be discovered.
+\end{addmargin}
 \subsubsubsection{De-randomization}
+\begin{addmargin}[\marginwidth]{0cm}
 When AFL meets a random number, mutating one input value might not yield the same result, as mutating the same input value immediately after. Because of this, AFL features de-randomization, which allows for it to force randomized variables, to consistently use a specific seed, which in turn allows for consistent input/output-relations.
+\end{addmargin}
 \newpage
 \subsection{Limitations of AFL}
 \label{sec:LimitsAFL}
@@ -166,11 +176,17 @@ Because of this trait, symbolic execution's relevance to the experiment is furth
 \subsection{Limitations of Symbolic Execution}
 \label{sec:LimitsSymEx}
 \subsubsubsection{Program-Dependent Efficiency}
-The advantage of having a symbolic execution-engine analyse paths, as opposed to input, is not present in all programs. If some inputs take the same paths in a program, the difference in analysing the inputs instead of paths, is vanishingly small.\\
+\begin{addmargin}[\marginwidth]{0cm}
+The advantage of having a symbolic execution-engine analyse paths, as opposed to input, is not present in all programs. If some inputs take the same paths in a program, the difference in analysing the inputs instead of paths, is vanishingly small.
+\end{addmargin}
 \subsubsubsection{Environment Interactions}
-Often programs interact with their environment, such as executing system calls and/or receiving signals. This becomes a problem when these environment factors are not under the control of the symbolic execution tool, as the tool is not able to determine branching of a program, when it has insufficient data concerning input.\\
+\begin{addmargin}[\marginwidth]{0cm}
+Often programs interact with their environment, such as executing system calls and/or receiving signals. This becomes a problem when these environment factors are not under the control of the symbolic execution tool, as the tool is not able to determine branching of a program, when it has insufficient data concerning input.
+\end{addmargin}
 \subsubsubsection{Path Explosion}
+\begin{addmargin}[\marginwidth]{0cm}
 The last, and possibly biggest drawback in symbolic execution engines is the path explosion problem. This problem is caused by a program that is containing loops, which causes the amount of path to grow exponentially. In theory the path amount can even become infinite, because of unbound loops. This problem is near-not-existing in small programs, however it often scales faster than the symbolically executed program scales, rendering symbolic execution virtually useless for testing medium to large applications.
+\end{addmargin}
 \section{angr: The Concolic Execution Engine}
 \label{sec:angr}
 angr is a binary analysis framework, engineered modularly to be as versatile and composable as possible. Because of this, angr's use has potential to span wide, within the subject of binary analysis. Consider, for instance, just these few, but broad, uses of angr:
@@ -302,14 +318,117 @@ The advantage of the combination of the technologies is vast. First of all the u
 Because of these augmentations, Driller is able to work as not only an improved version of a concolic execution engine, but also like an improved version of AFL.
 \section{Testing}
 \label{sec:Testing}
-Team Shellphish 
+When testing Driller, Team Shellphish set two primary goals of achievement, as well as one secondary goal of documentation. The first achievement goal was to prove, primarily, that Driller is able to expand on the code coverage, offered by fuzzers, instrumented as described in Section \ref{sec:FeaturesAFL}, but not augmented by symbolic execution. The second achievement goal was, in continuation of the first one, that the increased code coverage would lead to a greater number of discovered vulnerabilities, than that of both traditional symbolic executers as well as fuzzers, such as American Fuzzy Lop.
+
+The secondary goal was to, through these test, showcase the findings, which would serve to prove the advantage of Driller, advertising the tool, and thereby promoting the scientific community with their discoveries.
 \subsection{Test Cases}
 \label{sec:TestCases}
-When testing Driller, Team Shellphish set two primary goals of achievement, as well as one secondary goal of documentation. The achievement goals were to prove, primarily, that Driller is able to expand on the code coverage, offered by fuzzers, instrumented as described in \ref{sec:FeaturesAFL}
+As such, the test cases were not binaries, potentially riddled with previously undiscovered bugs, but rather a set of binaries with both know bugs, and an assured challenging variety of these. Thus, the set of binaries of the qualifying event of the DARPA CGC was chosen, as these were "designed to test the abilities of a new generation of fully automated cyber defence systems"\cite{DARPA}.
+
+The full set consists of 131 binaries, five of which, however, involve cross-binary communication, why these five binaries were excluded from this dataset. The remaining 126 binaries featured bugs, hidden well by complex protocols, specific inputs and data structures, and large input spaces. The individual binaries were specifically designed with the purpose to stress the programs, analysing them, as well as pose a serious challenge to the techniques used, regardless of the strength of the computer running the analysis. The reason, such a challenging set of binaries was chosen was, that if every vulnerability was to be discovered, the dataset would either have showcased Driller's capabilities precisely, not have shown all of Driller's capabilities, and worst case, not shown Driller's flaws, which would provide no basis for further expanding on the techniques, used by Driller. 
+
+Additionally, the results of the other contenders in the CGC is available online, which gave Team Shellphish the possibility of comparing their test results to those of the top contenders in the CGC.
+\subsection{Basis}
+\label{sec:Basis}
+There was run total of three experiments, which were chosen in order to provide the best basis comparing the techniques, used in Driller, and all of them were used to try to find bugs in every single one of the CGC Qualifying event binaries. The techniques were the following:\\
+\subsubsubsection{Basic Fuzzing}
+\begin{addmargin}[\marginwidth]{0cm}
+In this test case, a slightly modified version of AFL was used, and assigned four cores, intended for fuzzing. Only AFL's QEMU backend was modified  here, and this was only altered as to reduce inefficiency, when fuzzing CGC binaries. 
+\end{addmargin}
+\subsubsubsection{Symbolic Execution}
+\begin{addmargin}[\marginwidth]{0cm}
+In this test case, an existing symbolic execution engine was used, based on the thoughts described in the Mayhem paper\cite{Mayhem}, which were also the basis for angr's concolic execution engine. all of the techniques, described in section \ref{sec:FeaturesSymEx} were used, in order to reduce the path explosion problem. This problem was the only major solvable threat to the symbolic execution engine, seeing as the environment interaction problem, described in section \ref{sec:LimitsSymEx} was of no concern because the challenge binaries each were at their own respective, right places.
+\end{addmargin}
+\subsubsubsection{Driller}
+\begin{addmargin}[\marginwidth]{0cm}
+In this test case, four cores were assigned to the AFL component, and 64 were assigned to the concolic execution component. The concolic execution compartment analysed jobs in a first-in-first-out queue, and a job was assigned to the component, when Driller decided that the AFL fuzzing nodes had become stuck. The symbolic execution traces were restricted, disallowing them to exceed both a one-hour period, and a four giga-byte memory size. This was done to avoid letting large traces to exhaust resources, required by the other components of Driller.
+\end{addmargin}
 \subsection{Results}
 \label{sec:Results}
-\subsubsection*{Comparable to non-instrumented Fuzzing}
-\subsubsection*{Comparable to Symbolic Execution}
+Of the three techniques, Driller proved to present an advantage. The ranking was the following:
+\begin{itemize}[noitemsep]
+	\item[1:] Driller, with crashes found in 77 of the 126 binaries.
+	\item[2:] Fuzzing, with crashes found in 68 of the 126 binaries.
+	\item[3:] Symbolic execution, with crashes found in 16 of the 126 binaries.
+\end{itemize}
+Out of the 16 crashes, found by symbolic execution and 68 crashes found by fuzzing, every single one was found by Driller. The relationship between the crashes found by the three techniques can be seen below, in table \ref{UnionCrash}. \\
+\begin{table}[h!]
+	\begin{center}
+		\begin{tabular}{l|l}\hline
+		Driller                                 & 77 \\
+		Fuzzing                                  & 68 \\
+		Symbolic Execution                        & 16 \\
+		Driller $\cap$ Fuzzing                     & 68 \\
+		Driller $\cap$ Symbolic Execution           & 16 \\
+		Fuzzing $\cap$ Symbolic Execution            & 13 \\
+		Driller - (Fuzzing $\cup$ Symbolic Execution) & 9
+		\end{tabular}
+		\caption{Crashes, distributed between symbolic execution, fuzzing and Driller}
+		\label{UnionCrash}
+	\end{center}
+\end{table}\\
+Table \ref{UnionCrash} above shows the distribution of crashes, between symbolic execution, fuzzing and Driller. It states that the total number of crashes, discovered by fuzzing and symbolic execution, even when combined, cannot reach the total number of crashes found By Driller. The remaining crashes found by Driller sums to a total of 9 crashes, which equates an improvement at about $7,59\%$, when compared to the other 68 crashes. These additional 9 crashes, and the fact that neither fuzzing, nor symbolic execution discovered them, must lead to the conclusion that the additional advantages, described in section \ref{sec:DrillerAdditionalAdvantages} had the significant effect of increasing the code coverage to the point of being able to discover these new kinds of bugs.
+
+Driller might have been able to discover more bugs, had it not been for the restrictions, described in section \ref{sec:Basis}, however, it was decided that 1. the resources were better spent elsewhere, and 2. because of this, the techniques were not deemed sufficient for finding these bugs, with the standard of today's computing power.
+\subsubsection{Strengths of Driller}
+\label{sec:DrillerStrengths}
+
+\subsubsection{Weaknesses of Driller}
+\label{sec:Driller Weaknesses}
+Though most of what is discussed in this report states the contrary, Driller is not without its fair share of limitations. One of these comes in the form of a bi-product of one of its greatest advantages. The strength in question is the one, concerning preconstraining input, described in section \ref{sec:preconstraining}. In most cases this is greatly advantageous, as it allows for the AFL component of Driller to interact with the symbolic execution component of Driller, allowing the lastly mentioned to skip, otherwise slow and tedious symbolic invocations, if Driller had previously deemed it unworthy of further analysis, based on AFL's discoveries. Where this technique falls short, however, is when AFL, given its broad and general nature of testing, fails to determine that a given path is actually indeed interesting, and denies the symbolic execution component of this.
+\begin{lstlisting}[caption=An example of preconstraining being a disadvantage,
+label=PreconstrainingDisadvantage, captionpos=b]
+int strcmp(char *a, char *b){
+    for ( ; *a; a++; b++){
+        if (*a != *b){
+            break();
+        }
+    }
+    return 0;
+}
+
+int main(void)
+{
+    char x;
+    char y = "fine"
+    char z = "notFine"
+    
+    read(0, &x, sizeof(x));
+    
+    if (strcmp(*x, *y) == 0){
+        ...
+    } else if (strcmp(*x, *z) == 0){
+        vulnerability();
+    }
+    return 0;
+}
+\end{lstlisting}
+An example of this is given in listing \ref{PreconstrainingDisadvantage} \cite[p.14]{Driller}. The check at line 18 will in the far majority of cases be satisfied by Driller. As each branch, derived from the check on line 18, relies on \ttt{strcmp}, the AFL component of Driller isn't able to evaluate which state transitions \ttt{strcmp} will lead to. This is calculated before the check, and so, the check will always be met, which in turn deprives Driller from discovering the crash at line 21.
+
+Another example where Driller fall short is when the tool encounters a combination of both specific and general input, by the same input value. 
+\newpage
+\begin{lstlisting}[caption=An example of Driller being outmanoeuvred by specific and general input,
+label=GeneralSpecific, captionpos=b]
+
+int main(void)
+{
+    int x;
+    int y = 0;
+    int z = 0;
+
+    read(0, &x, sizeof(x));
+    
+    if (*x == 0x12345678){y = 1;}
+    if (*x != 0x87654321 AND *y == 1){z = 1;}
+    if (*y + *z == 2){
+        vulnerability();
+    }
+    return 0;
+}
+\end{lstlisting}
+An example of this can be seen in the small program, listing \ref{GeneralSpecific}. This program takes an input of \ttt{x}, which is exposed to a check at line 10. This check requires that \ttt{x} is \tit{exactly} \ttt{0x12345678}, and so, as Driller is here dealing in specific input, its symbolic execution engine is invoked. Therefore, this check is quickly, and painlessly dealt with. On line 11, however, \ttt{x} is subjected to yet another check, however, and this check makes it harder for the symbolic execution engine to progress, as this will create a path explosion, and thus, Driller is unable to discover the crash at line 15.
+
+As such, the majority of Driller's issues show themselves, when the fuzzing component is being "disabled" by the program, being analysed. The mitigation of this issue will be further discussed in section \ref{sec:FutureWork}.
 \section{Conclusion}
 \label{sec:Conclusion}
 
@@ -318,6 +437,7 @@ When testing Driller, Team Shellphish set two primary goals of achievement, as w
 
 \subsection{Future Work}
 \label{sec:FutureWork}
+%Side 15 i Drillerpaper har en potentiel løsning på problemet
 %Shellphish, der har lavet angr, har open-sourcet det, for at tillade videreudvikling - ergo er der OCEANER af 'future work'!
 \section{Acknowledgements}
 \label{sec:Acks}
@@ -342,6 +462,8 @@ When testing Driller, Team Shellphish set two primary goals of achievement, as w
 	pages 89–100, 
 	ACM,
 	2007.
+\bibitem{DARPA}
+	DARPA. Cyber Grand Challenge. http://cybergrandchallenge.com.
 \end{thebibliography}
 \begin{comment}
 Listinglabels
@@ -350,16 +472,20 @@ diffToFuzz
 symExExample
 randomness
 preconstraining
+PreconstrainingDisadvantage
+GeneralSpecific
 
 Figurelabels
 ---------------
 Compartments
+UnionCrash
 
 Biblabels
 ---------------
 Driller
 Mayhem
 VEX
+DARPA
 
 Seclabels
 ---------------
@@ -383,7 +509,9 @@ sec:TheAlgorithm
 sec:DrillerAdditionalAdvantages
 sec:Testing
 sec:TestCases
+sec:Basis
 sec:Results
+sec:Discussion
 sec:Conclusion
 sec:FutureWork
 sec:Acks
