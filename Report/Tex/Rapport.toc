@@ -44,14 +44,14 @@
 \contentsline {subsection}{\numberline {8.2}Basis}{13}
 \addvspace {0\p@ }
 \contentsline {subsection}{\numberline {8.3}Results}{14}
-\contentsline {subsubsection}{\numberline {8.3.1}Strengths of Driller}{14}
-\contentsline {subsubsection}{\numberline {8.3.2}Weaknesses of Driller}{14}
+\contentsline {subsubsection}{\numberline {8.3.1}Shown strengths of Driller}{14}
+\contentsline {subsubsection}{\numberline {8.3.2}Shown weaknesses of Driller}{15}
 \addvspace {1\p@ }
-\contentsline {section}{\numberline {9}Conclusion}{16}
+\contentsline {section}{\numberline {9}Discussion}{17}
 \addvspace {0\p@ }
-\contentsline {subsection}{\numberline {9.1}Discussion}{16}
+\contentsline {subsection}{\numberline {9.1}Conclusion}{17}
 \addvspace {0\p@ }
-\contentsline {subsection}{\numberline {9.2}Future Work}{16}
+\contentsline {subsection}{\numberline {9.2}Future Work}{17}
 \addvspace {1\p@ }
-\contentsline {section}{\numberline {10}Acknowledgements}{16}
+\contentsline {section}{\numberline {10}Acknowledgements}{17}
 \addvspace {1\p@ }
