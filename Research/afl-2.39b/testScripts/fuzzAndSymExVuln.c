@@ -15,22 +15,33 @@
 
 int main(void)
 {
-    int int1[32];
-    int int2[32];
-    div_t d;
+    int *int1;
+    int *int2;
+    int *int3;
+    
+    int i;
 
     //Take input of first integer
+    printf("please enter int1\n");
     scanf("%i", int1);
     //Every 5000th input will result in a crash
-    d = div(*int1, 5000);
     
-    if (d.rem == 0) {
+    /*
+    for (i = 1; 50; i = i + 1) {
+        printf("please enter int2\n");
+        scanf("%i", int2);
+        if (int2 == 0){
+            int1 = int1 -1;
+        }else int1 = int1 + 1;
+    }*/
+    
+    if (*int1 == 1000) {
         
         //Take input of second integer
-        scanf("%i", int2);
+        scanf("%i", int3);
         
         //Every 2^32th input will result in a crash.
-        if (*int2 == 123456789){
+        if (*int3 == 123456789){
             
             //Crash here
             abort();

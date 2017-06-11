@@ -2,7 +2,7 @@
 //  fuzzVuln.c
 //  
 //
-//  Created by Søren Lund Jensen on 17/05/2017.
+//  Created by Soeren Lund Jensen on 17/05/2017.
 //
 //  Purpose: A program, to test fuzzing.
 
@@ -11,7 +11,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 
 int main(void)
 {

@@ -12,7 +12,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-
 int main(void)
 {
     int int1[32];

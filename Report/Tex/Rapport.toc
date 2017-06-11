@@ -1,57 +1,60 @@
 \select@language {english}
 \addvspace {1\p@ }
 \addvspace {1\p@ }
-\contentsline {section}{\numberline {1}Abstract}{2}
+\contentsline {section}{\numberline {1}Abstract}{5}
 \addvspace {1\p@ }
-\contentsline {section}{\numberline {2}Introduction and concept}{3}
+\contentsline {section}{\numberline {2}Introduction and concept}{6}
 \addvspace {0\p@ }
-\contentsline {subsection}{\numberline {2.1}Problem statement}{3}
+\contentsline {subsection}{\numberline {2.1}Problem Statement}{6}
 \addvspace {1\p@ }
-\contentsline {section}{\numberline {3}Team Shellphish}{4}
+\contentsline {section}{\numberline {3}Team Shellphish}{7}
 \addvspace {1\p@ }
-\contentsline {section}{\numberline {4}American Fuzzy Lop}{4}
-\addvspace {0\p@ }
-\contentsline {subsection}{\numberline {4.1}Features of AFL}{4}
-\addvspace {0\p@ }
-\contentsline {subsection}{\numberline {4.2}Limitations of AFL}{5}
+\contentsline {section}{\numberline {4}Background for the Problem Statement}{7}
 \addvspace {1\p@ }
-\contentsline {section}{\numberline {5}Symbolic Execution}{5}
+\contentsline {section}{\numberline {5}American Fuzzy Lop}{8}
 \addvspace {0\p@ }
-\contentsline {subsection}{\numberline {5.1}Features of Symbolic Execution}{5}
+\contentsline {subsection}{\numberline {5.1}Features of AFL}{8}
 \addvspace {0\p@ }
-\contentsline {subsection}{\numberline {5.2}Limitations of Symbolic Execution}{6}
+\contentsline {subsection}{\numberline {5.2}Limitations of AFL}{9}
 \addvspace {1\p@ }
-\contentsline {section}{\numberline {6}angr: The Concolic Execution Engine}{7}
+\contentsline {section}{\numberline {6}Symbolic Execution}{10}
 \addvspace {0\p@ }
-\contentsline {subsection}{\numberline {6.1}Diversity}{8}
+\contentsline {subsection}{\numberline {6.1}Features of Symbolic Execution}{10}
 \addvspace {0\p@ }
-\contentsline {subsection}{\numberline {6.2}The Binary Load Sub-Module}{8}
+\contentsline {subsection}{\numberline {6.2}Limitations of Symbolic Execution}{11}
 \addvspace {1\p@ }
-\contentsline {section}{\numberline {7}Driller: Concolic Execution-Assisted Fuzzing}{8}
+\contentsline {section}{\numberline {7}angr: The Concolic Execution Engine}{12}
 \addvspace {0\p@ }
-\contentsline {subsection}{\numberline {7.1}Input Preconstraining}{9}
+\contentsline {subsection}{\numberline {7.1}Diversity}{12}
 \addvspace {0\p@ }
-\contentsline {subsection}{\numberline {7.2}Re-randomization}{10}
-\addvspace {0\p@ }
-\contentsline {subsection}{\numberline {7.3}The Algorithm}{11}
-\addvspace {0\p@ }
-\contentsline {subsection}{\numberline {7.4}Additional Advantages of Driller}{12}
+\contentsline {subsection}{\numberline {7.2}The Binary Load Sub-Module}{13}
 \addvspace {1\p@ }
-\contentsline {section}{\numberline {8}Testing}{12}
+\contentsline {section}{\numberline {8}Driller: Concolic Execution-Assisted Fuzzing}{14}
 \addvspace {0\p@ }
-\contentsline {subsection}{\numberline {8.1}Test Cases}{13}
+\contentsline {subsection}{\numberline {8.1}Input Preconstraining}{15}
 \addvspace {0\p@ }
-\contentsline {subsection}{\numberline {8.2}Basis}{13}
+\contentsline {subsection}{\numberline {8.2}Re-randomization}{16}
 \addvspace {0\p@ }
-\contentsline {subsection}{\numberline {8.3}Results}{14}
-\contentsline {subsubsection}{\numberline {8.3.1}Shown strengths of Driller}{14}
-\contentsline {subsubsection}{\numberline {8.3.2}Shown weaknesses of Driller}{15}
+\contentsline {subsection}{\numberline {8.3}The Algorithm}{17}
+\addvspace {0\p@ }
+\contentsline {subsection}{\numberline {8.4}Additional Advantages of Driller}{18}
 \addvspace {1\p@ }
-\contentsline {section}{\numberline {9}Discussion}{17}
+\contentsline {section}{\numberline {9}Testing}{18}
 \addvspace {0\p@ }
-\contentsline {subsection}{\numberline {9.1}Conclusion}{17}
+\contentsline {subsection}{\numberline {9.1}Test Cases}{18}
 \addvspace {0\p@ }
-\contentsline {subsection}{\numberline {9.2}Future Work}{17}
+\contentsline {subsection}{\numberline {9.2}Basis}{19}
+\contentsline {subsubsection}{\numberline {9.2.1}Hardware and limits}{19}
+\addvspace {0\p@ }
+\contentsline {subsection}{\numberline {9.3}Results}{20}
+\contentsline {subsubsection}{\numberline {9.3.1}Shown strengths of Driller}{21}
+\contentsline {subsubsection}{\numberline {9.3.2}Shown weaknesses of Driller}{22}
 \addvspace {1\p@ }
-\contentsline {section}{\numberline {10}Acknowledgements}{17}
+\contentsline {section}{\numberline {10}Discussion}{23}
+\addvspace {0\p@ }
+\contentsline {subsection}{\numberline {10.1}Conclusion}{24}
+\addvspace {0\p@ }
+\contentsline {subsection}{\numberline {10.2}Future Work}{24}
 \addvspace {1\p@ }
+\addvspace {1\p@ }
+\contentsline {section}{\numberline {11}Appendix}{26}
