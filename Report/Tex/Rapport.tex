@@ -20,6 +20,8 @@
 \usepackage{scrextend}
 \usepackage{background}
 \usepackage{titling}
+\usepackage{enumitem}
+\usepackage{url}
 
 \newcommand{\setR}{\mathbb{R}}
 \newcommand{\setZ}{\mathbb{Z}}
@@ -57,12 +59,15 @@
 
 \renewcommand{\headrulewidth}{0pt}
 \newenvironment{bottompar}{\par\vspace*{\fill}}{\clearpage}
+\newenvironment{middlepar}{\par\vspace*{0.5\fill}}{\clearpage}
 
 \setlength{\droptitle}{3.5cm} 
 
-\title{BSc Thesis, Spring 2017\\
-\tbf{Assisting Fuzzing with Concolic Execution}}
-\author{Søren Lund Jensen $|$ PWS412}
+\title{Fuzzing with American Fuzzy Lop\\
+\tbf{Assisting Fuzzing with Symbolic Execution}}
+\author{\tbf{Søren Lund Jensen} $|$ PWS412\\
+DIKU, Department of Computer Science,\\
+University of Copenhagen, Denmark}
 
 \begin{document}
 
@@ -71,10 +76,20 @@
 	contents={\includegraphics[width=\paperwidth,height=\paperheight]{forside}}
 }
 
+%\ \\[3.4cm]
+\ \vspace{3.4cm}
+\begin{addmargin}[-2.5cm]{0cm}
+{\large \tbf{BSc Thesis}}\\[0.2cm]
+{\large Søren Lund Jensen}\\[0.9cm]
+{\LARGE Fuzzing with American Fuzzy Lop}\\[0.2cm]
+{\large Assisting Fuzzing with Symbolic Execution}
+\end{addmargin}
+
 \begin{bottompar}
 	\begin{itemize}[noitemsep]
 	   \item[Academic advisor:] Michael Kirkedal Thomsen
 	                   \item[ ] Troels Larsen
+	           \item[Submitted] \today
 	\end{itemize}
 \end{bottompar}
 
@@ -85,11 +100,17 @@
 \maketitle
 
 \newpage
-
-\begin{itemize}
-	\item TODO
-\end{itemize}
-
+\ \vspace{3.4cm}
+\begin{description}[labelwidth=9em,leftmargin =\dimexpr\labelwidth+\labelsep\relax, font=\normalfont\space]
+	\item[Author:]			Søren Lund Jensen
+	\item[Affiliation:]		DIKU, Department of Computer Science,\\
+							University of Copenhagen, Denmark
+	\item[Title:]			Fuzzing with American Fuzzy Lop, \\
+							Assisting Fuzzing with Symbolic Execution
+	\item[Academic Advisor:]	Michael Kirkedal Thomsen \\
+							Troels Larsen
+	\item[Submitted:] 		\today
+\end{description}
 \newpage
 
 \tableofcontents
@@ -97,7 +118,7 @@
 \newpage
 \section{Abstract}
 \label{sec:Abstract}
-The following paper analyses the program Driller, by the Shellphish team of UC, Santa Barbara. The program Driller is designed to be an expanded upon version of American Fuzzy Lop, which has been used in the first annual DARPA Cyber Grand Challenge competition. The DARPA CGC had the goal of enhancing research in the field of autonomous binary analysis, which it reached by offering generous prices for not only the winners of the competition, but everyone who qualified for the event in the first place.
+The following paper analyses the program Driller, by the Shellphish team of UC, Santa Barbara. The program Driller is designed to be an expanded upon version of American Fuzzy Lop\cite{AFL}, which has been used in the first annual DARPA Cyber Grand Challenge\cite{DARPA} competition. The DARPA CGC had the goal of enhancing research in the field of autonomous binary analysis, which it reached by offering generous prices for not only the winners of the competition, but everyone who qualified for the event in the first place.
 
 Shellphish' Driller was among these programs, and have after the competition proven to be a quite useful tool, as it is able to discover a broader variety of bugs, due to its increased code coverage. The additional code coverage, which separates Driller from ordinary fuzzers, is its ability to make use of angr, the concolic execution engine, which allows Driller to dig deeper into the analysed binaries, triggering bugs, hidden by several layers of complex checks, which a standard fuzzer would take ages to randomly discover.
 
@@ -509,7 +530,7 @@ Both regarding Driller, and the topic in general, there is room for improvement.
 Second of all, Driller expands upon the discussion of enhancing fuzzing with all sorts of techniques. angr, the heart to the project itself, is open sourced, and as described in section \ref{sec:angr}, it is composed to be as modular and diverse as possible, making its broad uses virtually endless. 
 %Second of all, giver driller anledning til at arbejde videre med samme principper, hvilket ville være nuice.
 \newpage
-\begin{thebibliography}{9}
+\begin{thebibliography}{20}
 \bibitem{Driller}
 	N. Stephens, J. Grosen, C. Salls, A. Dutcher, R. Wang, J. Corbetta, Y. Shoshitaishivili, C. Kruegel, G.  Vigna,
 	Driller: Augmenting Fuzzing Through Selective Symbolic Execution,
@@ -529,7 +550,22 @@ Second of all, Driller expands upon the discussion of enhancing fuzzing with all
 	ACM,
 	2007.
 \bibitem{DARPA}
-	DARPA. Cyber Grand Challenge. http://cybergrandchallenge.com.
+	DARPA Cyber Grand Challenge. http://cybergrandchallenge.com.
+\bibitem{Firmalice}
+	Y. Shoshitaishivili, R Wang, C Hauser, C Kruegel, G Vigna.
+	Firmalice - Automatic Detection of Authentication Bypass Vulnerabilities in Binary Firmware,
+	2015
+\bibitem{AFL}
+	American Fuzzy Lop,
+	http://lcamtuf.coredump.cx/afl/
+\bibitem{Infosec}
+	Infosec Institute,
+	\url{http://resources.infosecinstitute.com/fuzzing-mutation-vs-generation}
+\bibitem{angr}
+	angr,
+	N. Stephens, J. Grosen, C. Salls, A. Dutcher, R. Wang, J. Corbetta, Y. Shoshitaishivili, C. Kruegel, G.  Vigna,
+	Driller: Augmenting Fuzzing Through Selective Symbolic Execution,
+	\url{https://www.gitbook.com/book/angr/angr/details}
 \end{thebibliography}
 \newpage
 \section{Appendix}
@@ -654,9 +690,5 @@ sec:Results
 sec:Discussion
 sec:Conclusion
 sec:FutureWork
-\end{comment}
-\begin{comment}
-idéer til mere rapport:
-måske noget mere med intro
 \end{comment}
 \end{document}
